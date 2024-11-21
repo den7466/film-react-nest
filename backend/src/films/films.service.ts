@@ -1,29 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Film, Schedule } from './films.schema';
+import { FilmsRepository } from '../repository/films.repository';
 
 interface IFilms {
   total: number;
-  items: Film[];
+  items: any[];
 }
 
 interface ISchedules {
   total: number;
-  items: Schedule[];
+  items: any[];
 }
 
 @Injectable()
 export class FilmsService {
-  constructor(@InjectModel(Film.name) private filmModel: Model<Film>) {}
+  constructor(private readonly filmsRepository: FilmsRepository) {}
 
   async findAll(): Promise<IFilms> {
-    const result = await this.filmModel.find();
+    const result = await this.filmsRepository.findAll();
     return { total: result.length, items: result };
   }
 
   async findScheduleById(id: string): Promise<ISchedules> {
-    const result = await this.filmModel.findOne({ id: id });
+    const result = await this.filmsRepository.findFilmById(id);
     return { total: result.schedule.length, items: result.schedule };
   }
 }
