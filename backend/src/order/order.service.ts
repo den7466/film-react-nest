@@ -1,16 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FilmsRepository } from 'src/repository/films.repository';
-import { CreateOrdersDto, Ticket } from './dto/order.dto';
+import { CreateOrdersDto, ReturnError, ReturnOrdersDto } from './dto/order.dto';
 import { OrdersRepository } from 'src/repository/orders.repository';
-
-interface Order {
-  total: number;
-  items: Ticket[];
-}
-
-interface Error {
-  error: string;
-}
 
 @Injectable()
 export class OrderService {
@@ -21,7 +12,7 @@ export class OrderService {
 
   async createOrder(
     createOrderDto: Omit<CreateOrdersDto, 'id'>,
-  ): Promise<Order | Error> {
+  ): Promise<ReturnOrdersDto | ReturnError> {
     try {
       const films = [];
       for (const film of createOrderDto.tickets) {
@@ -39,7 +30,7 @@ export class OrderService {
                 (item) => item === `${ticket.row}:${ticket.seat}`,
               )
             ) {
-              throw new Error('Tickets already exists');
+              throw new Error('Билеты с такими данными уже существует');
             }
           }
         }
@@ -68,7 +59,7 @@ export class OrderService {
         items: result.tickets,
       };
     } catch (e) {
-      return { error: 'Билеты с такими данными уже существует' };
+      return { error: e.message };
     }
   }
 }

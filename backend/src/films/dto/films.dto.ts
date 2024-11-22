@@ -1,5 +1,5 @@
 //TODO описать DTO для запросов к /films
-export interface Schedule {
+export class Schedule {
   id: string;
   daytime: string;
   hall: number;
@@ -9,6 +9,38 @@ export interface Schedule {
   taken: string[];
 }
 
-export interface CreateFilmDto {
+export class CreateFilmDto {
+  id: string;
+  rating: number;
+  director: string;
+  tags: string[];
+  title: string;
+  about: string;
+  description: string;
+  image: string;
+  cover: string;
+  schedule: Schedule[];
+}
 
+export class GetFilmDto {
+  id: string;
+  rating: number;
+  director: string;
+  tags: string[];
+  title: string;
+  about: string;
+  description: string;
+  image: string;
+  cover: string;
+  schedule: Schedule[];
+}
+
+export class ReturnFilms {
+  total: number;
+  items: GetFilmDto[];
+}
+
+export class ReturnSchedules {
+  total: number;
+  items: Schedule[];
 }

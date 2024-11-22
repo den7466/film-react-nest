@@ -5,7 +5,7 @@ import { CreateOrdersDto } from 'src/order/dto/order.dto';
 @Injectable()
 export class OrdersRepository {
   private orders: CreateOrdersDto[] = [];
-  createOrder(order: Omit<CreateOrdersDto, 'id'>) {
+  createOrder(order: Omit<CreateOrdersDto, 'id'>): CreateOrdersDto {
     this.orders.forEach((element) => {
       element.tickets.forEach((ticket) => {
         if (
@@ -17,7 +17,7 @@ export class OrdersRepository {
               item.seat === ticket.seat,
           )
         ) {
-          throw new Error('Tickets already exists');
+          throw new Error('Билеты с такими данными уже существует');
         }
       });
     });
