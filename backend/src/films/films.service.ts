@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FilmsRepository } from '../repository/films.repository';
-import { ReturnFilms, ReturnSchedules } from './dto/films.dto';
+import { ReturnError, ReturnFilms, ReturnSchedules } from './dto/films.dto';
 
 @Injectable()
 export class FilmsService {
@@ -11,8 +11,15 @@ export class FilmsService {
     return { total: result.length, items: result };
   }
 
-  async findScheduleById(id: string): Promise<ReturnSchedules> {
-    const result = await this.filmsRepository.findFilmById(id);
-    return { total: result.schedule.length, items: result.schedule };
+  async findScheduleById(id: string): Promise<ReturnSchedules | ReturnError> {
+    try {
+      const result = await this.filmsRepository.findFilmById(id);
+      if (!result) {
+        throw new Error('По заданному id данные не найдены');
+      }
+      return { total: result.schedule.length, items: result.schedule };
+    } catch (e) {
+      return { error: e.message };
+    }
   }
 }

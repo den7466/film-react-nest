@@ -1,3 +1,5 @@
+import { IsNotEmpty, IsString } from 'class-validator';
+
 export class Schedule {
   id: string;
   daytime: string;
@@ -6,19 +8,6 @@ export class Schedule {
   seats: number;
   price: number;
   taken: string[];
-}
-
-export class CreateFilmDto {
-  id: string;
-  rating: number;
-  director: string;
-  tags: string[];
-  title: string;
-  about: string;
-  description: string;
-  image: string;
-  cover: string;
-  schedule: Schedule[];
 }
 
 export class GetFilmDto {
@@ -42,4 +31,14 @@ export class ReturnFilms {
 export class ReturnSchedules {
   total: number;
   items: Schedule[];
+}
+
+export class FindFilmIdParams {
+  @IsNotEmpty()
+  @IsString()
+  id: string;
+}
+
+export class ReturnError {
+  error: string;
 }
