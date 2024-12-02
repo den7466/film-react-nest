@@ -1,16 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { join } from 'node:path';
-import { OrderController } from './order/order.controller';
-import { OrderService } from './order/order.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Film, FilmSchema } from './repository/films.schema';
-import { FilmsController } from './films/films.controller';
-import { FilmsRepository } from './repository/films.repository';
-import { FilmsService } from './films/films.service';
-import { OrdersRepository } from './repository/orders.repository';
 import { configProvider } from './app.config.provider';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -22,23 +15,9 @@ import { configProvider } from './app.config.provider';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (config: ConfigService) => {
-        return {
-          uri: config.get<string>('database.url'),
-        };
-      },
-      inject: [ConfigService],
-    }),
-    MongooseModule.forFeature([
-      {
-        name: Film.name,
-        schema: FilmSchema,
-      },
-    ]),
+    DatabaseModule,
   ],
-  controllers: [OrderController, FilmsController],
-  providers: [OrdersRepository, OrderService, FilmsRepository, FilmsService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
