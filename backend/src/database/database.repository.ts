@@ -1,53 +1,52 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { GetFilmDto, Schedule } from 'src/films/dto/films.dto';
+import { Injectable, Optional } from '@nestjs/common';
+import { GetFilmDto } from 'src/films/dto/films.dto';
+import { CreateTicketDto } from 'src/order/dto/order.dto';
+import { PostgresRepository } from './postgresql.repository';
+import { MongodbRepository } from './mongodb.repository';
 import { Films } from 'src/films/entities/film.entity';
-import { Schedules } from 'src/films/entities/schedule.entity';
-import { Repository } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class DatabaseRepository {
+  private databaseType: string;
   constructor(
-    @InjectRepository(Films)
-    private filmsRepository: Repository<Films>,
-    @InjectRepository(Schedules)
-    private schedulesRepository: Repository<Schedules>,
-  ) {}
-
-  async filmsFindAll(): Promise<any[]> {
-    return await this.filmsRepository.find({
-      relations: {
-        schedule: true,
-      },
-    });
+    @Optional() private postgresRepository: PostgresRepository,
+    @Optional() private mongodbRepository: MongodbRepository,
+    private config: ConfigService,
+  ) {
+    this.databaseType = config.get<string>('database.driver');
   }
 
-  async findFilmById(id: string): Promise<GetFilmDto> {
-    const film = await this.filmsRepository.find({
-      where: { id: id },
-      relations: {
-        schedule: true,
-      },
-    });
-    if (film.length > 0) {
-      const newSchedules = [];
-      film[0].schedule.forEach((schedule) => {
-        newSchedules.push({
-          ...schedule,
-          taken: schedule.taken.length > 0 ? schedule.taken.split(',') : [],
-        });
-      });
-      const newFilm = {
-        ...film[0],
-        tags: film[0].tags.length > 0 ? film[0].tags.split(',') : [],
-        schedule: newSchedules,
-      };
-      return newFilm;
+  async filmsFindAll(): Promise<Films[] | GetFilmDto[]> {
+    switch (this.databaseType) {
+      case 'postgres':
+        return await this.postgresRepository.filmsFindAll();
+      case 'mongodb':
+        return await this.mongodbRepository.filmsFindAll();
+      default:
+        return await this.mongodbRepository.filmsFindAll();
     }
   }
 
-  updateFilmScheduleById(id: string, schedule: Schedule[]) {
-    console.log(id);
-    return true;
+  async findFilmById(id: string): Promise<any> {
+    switch (this.databaseType) {
+      case 'postgres':
+        return await this.postgresRepository.findFilmById(id);
+      case 'mongodb':
+        return await this.mongodbRepository.findFilmById(id);
+      default:
+        return await this.mongodbRepository.findFilmById(id);
+    }
+  }
+
+  async updateFilmSchedules(tikets: CreateTicketDto[], films?: any) {
+    switch (this.databaseType) {
+      case 'postgres':
+        return await this.postgresRepository.updateFilmSchedules(tikets);
+      case 'mongodb':
+        return await this.mongodbRepository.updateFilmScheduleById(tikets, films);
+      default:
+        return await this.mongodbRepository.updateFilmScheduleById(tikets, films);
+    }
   }
 }

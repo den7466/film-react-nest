@@ -15,7 +15,7 @@ import { DatabaseModule } from './database/database.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
-    DatabaseModule,
+    DatabaseModule.forRootAsync(),
   ],
   controllers: [],
   providers: [],

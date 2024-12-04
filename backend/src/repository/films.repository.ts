@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { GetFilmDto, Schedule } from 'src/films/dto/films.dto';
+import { GetFilmDto } from 'src/films/dto/films.dto';
 import { DatabaseRepository } from 'src/database/database.repository';
+import { CreateTicketDto } from 'src/order/dto/order.dto';
 
 @Injectable()
 export class FilmsRepository {
   constructor(private databaseRepository: DatabaseRepository) {}
 
-  findAll(): Promise<GetFilmDto[]> {
+  findAll(): Promise<any[]> {
     return this.databaseRepository.filmsFindAll();
   }
 
@@ -14,7 +15,7 @@ export class FilmsRepository {
     return this.databaseRepository.findFilmById(id);
   }
 
-  updateFilmScheduleById(id: string, schedule: Schedule[]) {
-    return this.databaseRepository.updateFilmScheduleById(id, schedule);
+  updateFilmSchedules(tikets: CreateTicketDto[], films?: any) {
+    return this.databaseRepository.updateFilmSchedules(tikets, films);
   }
 }
