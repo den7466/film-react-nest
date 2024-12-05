@@ -4,23 +4,21 @@ import { Films } from 'src/films/entities/film.entity';
 import { Schedules } from 'src/films/entities/schedule.entity';
 import { OrderController } from 'src/order/order.controller';
 import { FilmsController } from 'src/films/films.controller';
-import { OrdersRepository } from 'src/repository/orders.repository';
+import { OrdersRepository } from 'src/order/orders.repository';
 import { OrderService } from 'src/order/order.service';
-import { FilmsRepository } from 'src/repository/films.repository';
+import { FilmsRepository } from 'src/films/films.repository';
 import { FilmsService } from 'src/films/films.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DynamicModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Film, FilmSchema } from 'src/repository/films.schema';
+import { Film, FilmSchema } from 'src/films/films.schema';
 import { PostgresRepository } from './postgresql.repository';
 import { MongodbRepository } from './mongodb.repository';
 
 @Module({})
 export class DatabaseModule {
-  private databaseType: string;
-
   static forRootAsync(): DynamicModule {
-    const databaseType = process.env.DATABASE_DRIVER;
+    const databaseType = process.env.DATABASE_DRIVER || 'mongodb';
     const databaseImports = [];
     const databaseProviders = [];
     databaseProviders.push(

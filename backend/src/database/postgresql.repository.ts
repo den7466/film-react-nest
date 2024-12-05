@@ -15,12 +15,30 @@ export class PostgresRepository {
     private schedulesRepository: Repository<Schedules>,
   ) {}
 
-  async filmsFindAll(): Promise<Films[]> {
-    return await this.filmsRepository.find({
+  async filmsFindAll(): Promise<GetFilmDto[]> {
+    const films = await this.filmsRepository.find({
       relations: {
         schedule: true,
       },
     });
+    if (films.length === 0) {
+      return [];
+    }
+    const newFilms = films.map((film) => {
+      const newSchedules = [];
+      film.schedule.forEach((schedule) => {
+        newSchedules.push({
+          ...schedule,
+          taken: schedule.taken.length > 0 ? schedule.taken.split(',') : [],
+        });
+      });
+      return {
+        ...film,
+        tags: film.tags.length > 0 ? film.tags.split(',') : [],
+        schedule: newSchedules,
+      };
+    });
+    return newFilms;
   }
 
   async findFilmById(id: string): Promise<GetFilmDto> {

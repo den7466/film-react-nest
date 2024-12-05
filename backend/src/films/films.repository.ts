@@ -7,7 +7,7 @@ import { CreateTicketDto } from 'src/order/dto/order.dto';
 export class FilmsRepository {
   constructor(private databaseRepository: DatabaseRepository) {}
 
-  findAll(): Promise<any[]> {
+  findAll(): Promise<GetFilmDto[]> {
     return this.databaseRepository.filmsFindAll();
   }
 
@@ -15,7 +15,7 @@ export class FilmsRepository {
     return this.databaseRepository.findFilmById(id);
   }
 
-  updateFilmSchedules(tikets: CreateTicketDto[], films?: any) {
+  updateFilmSchedules(tikets: CreateTicketDto[], films?: GetFilmDto[]) {
     return this.databaseRepository.updateFilmSchedules(tikets, films);
   }
 }
