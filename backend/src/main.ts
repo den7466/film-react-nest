@@ -2,9 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import 'dotenv/config';
-import { DevLogger } from './loggers/DevLogger.service';
-import { JsonLogger } from './loggers/JsonLogger.service';
-import { TskvLogger } from './loggers/TskvLogger.service';
+import { DevLogger } from './loggers/devLogger.service';
+import { JsonLogger } from './loggers/jsonLogger.service';
+import { TskvLogger } from './loggers/tskvLogger.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

@@ -1,17 +1,17 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseRepository } from './database.repository';
-import { Films } from 'src/films/entities/film.entity';
-import { Schedules } from 'src/films/entities/schedule.entity';
-import { OrderController } from 'src/order/order.controller';
-import { FilmsController } from 'src/films/films.controller';
-import { OrdersRepository } from 'src/order/orders.repository';
-import { OrderService } from 'src/order/order.service';
-import { FilmsRepository } from 'src/films/films.repository';
-import { FilmsService } from 'src/films/films.service';
+import { Films } from '../films/entities/film.entity';
+import { Schedules } from '../films/entities/schedule.entity';
+import { OrderController } from '../order/order.controller';
+import { FilmsController } from '../films/films.controller';
+import { OrdersRepository } from '../order/orders.repository';
+import { OrderService } from '../order/order.service';
+import { FilmsRepository } from '../films/films.repository';
+import { FilmsService } from '../films/films.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DynamicModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Film, FilmSchema } from 'src/films/films.schema';
+import { Film, FilmSchema } from '../films/films.schema';
 import { PostgresRepository } from './postgresql.repository';
 import { MongodbRepository } from './mongodb.repository';
 
