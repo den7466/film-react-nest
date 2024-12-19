@@ -4,11 +4,11 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 
-RUN yarn install
+RUN npm ci
 
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
 EXPOSE 3000
 
