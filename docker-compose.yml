@@ -4,7 +4,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: "//free2code.nomorepartiesco.ru/api"
+        VITE_API_URL: "//free2code.nomorepartiesco.ru/api/afisha"
+        VITE_CDN_URL: "//free2code.nomorepartiesco.ru/content/afisha"
     container_name: frontend
     networks:
       - webnet
@@ -19,7 +20,10 @@ services:
     networks:
       - webnet
     environment:
-      - DATABASE_URL=mongodb://mongo:27017/afisha
+      - DATABASE_DRIVER=mongodb
+      - DATABASE_URL=mongo
+      - DATABASE_PORT=27017
+      - DATABASE_NAME=afisha
     depends_on:
       - mongo
 
