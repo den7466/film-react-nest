@@ -33,6 +33,7 @@ services:
     image: postgres:latest
     container_name: postgres
     volumes:
+      - ./initDB/:/docker-entrypoint-initdb.d
       - postgres_data:/usr/local/pgsql/data
     networks:
       - webnet
