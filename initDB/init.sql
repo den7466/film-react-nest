@@ -3,6 +3,8 @@ create user prac with encrypted password 'prac';
 create database prac
     with owner prac;
 
+\c prac;
+
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 create table public.films
