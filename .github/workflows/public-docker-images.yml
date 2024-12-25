@@ -25,7 +25,7 @@ jobs:
               with:
                 registry: ghcr.io
                 username: ${{ secrets.GHCR_USERNAME }}
-                password: ${{ secrets.GHCR_PASSWORD }}
+                password: ${{ secrets.GHCR_TOKEN }}
             
             - name: Cache Docker layers
               uses: actions/cache@v3
