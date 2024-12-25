@@ -19,6 +19,7 @@ services:
       - DATABASE_NAME=prac
       - DATABASE_USERNAME=prac
       - DATABASE_PASSWORD=prac
+      - LOGGER=tskv
     depends_on:
       - postgres
 
