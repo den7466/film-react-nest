@@ -52,11 +52,11 @@ jobs:
                 tags: ghcr.io/${{ github.repository }}/frontend:latest
 
             - name: Rebuild docker containers
-              uses: appleboy/ssh-action@v0.1.0
+              uses: appleboy/ssh-action@v1.2.0
               with:
                 host: ${{ secrets.SSH_HOST }}
                 username: ${{ secrets.SSH_USER }}
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 script: |
-                  cd film-react-nest
-                  sudo docker compose down
+                  whoami
+                  ls -al
