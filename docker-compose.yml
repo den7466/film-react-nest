@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: den7466/film-react-nest-frontend:latest
+    image: ghcr.io/den7466/film-react-nest/frontend:latest
     container_name: frontend
     networks:
       - webnet
@@ -8,7 +8,7 @@ services:
       - frontend_dist:/app/dist
 
   backend:
-    image: den7466/film-react-nest-backend:latest
+    image: ghcr.io/den7466/film-react-nest/backend:latest
     container_name: backend
     networks:
       - webnet
