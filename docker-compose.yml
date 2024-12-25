@@ -1,8 +1,7 @@
 services:
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      image: den7466/film-react-nest-frontend:latest
       args:
         VITE_API_URL: "//free2code.nomorepartiesco.ru/api/afisha"
         VITE_CDN_URL: "//free2code.nomorepartiesco.ru/content/afisha"
@@ -14,8 +13,7 @@ services:
 
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      image: den7466/film-react-nest-backend:latest
     container_name: backend
     networks:
       - webnet
