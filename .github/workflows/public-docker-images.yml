@@ -58,5 +58,5 @@ jobs:
                 username: ${{ secrets.SSH_USER }}
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 script: |
-                  whoami
-                  ls -al
+                  cd film-react-nest
+                  sudo docker compose down
