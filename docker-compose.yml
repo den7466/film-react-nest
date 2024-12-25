@@ -39,8 +39,6 @@ services:
     container_name: pgadmin
     networks:
       - webnet
-    ports:
-      - 8080:80
     environment:
       - PGADMIN_DEFAULT_EMAIL=veseliy.koteika@yandex.ru
       - PGADMIN_DEFAULT_PASSWORD=postgres
