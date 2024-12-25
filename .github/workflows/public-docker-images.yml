@@ -40,7 +40,7 @@ jobs:
                 context: ./backend
                 file: ./backend/Dockerfile
                 push: true
-                tags: ${{ github.repository }}/backend:latest
+                tags: ${{ github.actor }}/${{ github.repository }}-backend:latest
               
             - name: Build and push Frontend Docker image
               uses: docker/build-push-action@v6.10.0
@@ -48,4 +48,4 @@ jobs:
                 context: ./frontend
                 file: ./frontend/Dockerfile
                 push: true
-                tags: ${{ github.repository }}/frontend:latest
+                tags: ${{ github.actor }}/${{ github.repository }}-frontend:latest
