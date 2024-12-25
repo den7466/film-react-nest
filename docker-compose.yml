@@ -1,10 +1,6 @@
 services:
   frontend:
-    build:
-      image: den7466/film-react-nest-frontend:latest
-      args:
-        VITE_API_URL: "//free2code.nomorepartiesco.ru/api/afisha"
-        VITE_CDN_URL: "//free2code.nomorepartiesco.ru/content/afisha"
+    image: "den7466/film-react-nest-frontend:latest"
     container_name: frontend
     networks:
       - webnet
@@ -12,8 +8,7 @@ services:
       - frontend_dist:/app/dist
 
   backend:
-    build:
-      image: den7466/film-react-nest-backend:latest
+    image: "den7466/film-react-nest-backend:latest"
     container_name: backend
     networks:
       - webnet
