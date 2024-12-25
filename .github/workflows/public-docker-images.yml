@@ -35,7 +35,7 @@ jobs:
                 restore-keys: |
                   ${{ runner.os }}-buildx-
             
-            - name: Build and push Backend Docker image
+            - name: Build and push backend image
               uses: docker/build-push-action@v3
               with:
                 context: ./backend
@@ -43,7 +43,7 @@ jobs:
                 push: true
                 tags: ghcr.io/${{ github.repository }}/backend:latest
               
-            - name: Build and push Front Docker image
+            - name: Build and push frontend image
               uses: docker/build-push-action@v3
               with:
                 context: ./frontend
