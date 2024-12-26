@@ -1,3 +1,6 @@
+## Ссылка на рабочий проект: https://free2code.nomorepartiesco.ru/
+## ССылка на pgadmin: http://free2code.nomorepartiesco.ru:8080
+
 # FILM!
 
 ## Установка
